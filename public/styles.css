@@ -132,7 +132,7 @@ h2 {
 
 /* Профиль, Редактировать классы и Выйти — кнопки справа */
 /* Профиль, Редактировать классы и Выйти — кнопки справа */
-.profile-button, .logout-button, #edit-class-button-container {
+.profile-button, #edit-class-button,.logout-button, #edit-class-button-container {
   display: flex;
   justify-content: flex-end;
   margin-left: auto;
