@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Мой класс</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    td[contenteditable="true"] { background-color: #fffacd; }
+  </style>
+</head>
+<body>
+  <h1>Мой класс</h1>
+  <label for="studentSelect">Ученик:</label>
+  <select id="studentSelect"></select>
+
+  <label for="monthSelect">Месяц:</label>
+  <select id="monthSelect">
+    <option>Сентябрь</option><option>Октябрь</option><option>Ноябрь</option>
+    <option>Декабрь</option><option>Январь</option><option>Февраль</option>
+    <option>Март</option><option>Апрель</option><option>Май</option>
+  </select>
+
+  <button id="loadButton">Применить</button>
+  <button id="editButton" disabled>Поставить оценки</button>
+  <button id="saveButton" disabled>Сохранить</button>
+
+  <div id="gradesTableContainer"></div>
+  <button onclick="window.location.href='/'">🏠 Домой</button>
+
+
+  <script src="teacher.js"></script> <!-- Внешний JavaScript файл -->
+</body>
+</html>
