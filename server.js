@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
+
 const classesFilePath = path.join(__dirname, 'classes.json');
 const schedules = JSON.parse(fs.readFileSync(path.join(__dirname, 'schedules.json')));
 const gradesFile = path.join(__dirname, 'grades.json');
@@ -41,6 +42,8 @@ try {
   console.error('Ошибка при чтении classes.json:', err);
   classes = []; // по умолчанию
 }
+
+
 
 // Отдача классов
 app.get('/classes', (req, res) => {
@@ -218,13 +221,34 @@ app.post('/api/grades/:username/:month', express.json(), (req, res) => {
 });
 
 
+// Получить оценки ученика по месяцам
 app.get('/api/grades/:username/:month', (req, res) => {
   const { username, month } = req.params;
-  const grades = JSON.parse(fs.readFileSync('./grades.json', 'utf-8'));
+  
+  // Читаем файл grades.json
+  fs.readFile(gradesFile, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка при чтении файла:', err);
+      return res.status(500).json({ error: 'Ошибка сервера' });
+    }
+    
+    const gradesData = JSON.parse(data);
+    const studentGrades = gradesData[username];
 
-  const data = grades[username]?.[month] || {};
-  res.json(data);
+    if (!studentGrades) {
+      return res.status(404).json({ error: 'Студент не найден' });
+    }
+
+    const monthGrades = studentGrades[month];
+    
+    if (!monthGrades) {
+      return res.status(404).json({ error: 'Оценки за этот месяц не найдены' });
+    }
+
+    res.json(monthGrades);
+  });
 });
+
 
 
 

@@ -515,3 +515,227 @@ h2 {
 #add-user-button:hover {
   background-color: #45a049;
 }
+
+#my-class-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px; /* Отступ как у других кнопок */
+}
+
+#my-class-button {
+  background-color: #ffffff;
+  color: #4CAF50;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#my-class-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Стили для заголовка "Мой класс" */
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+/* Стили для селекторов "Ученик" и "Месяц" */
+label[for="studentSelect"],
+label[for="monthSelect"] {
+  margin-left: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+#studentSelect,
+#monthSelect {
+  margin: 10px 20px 20px 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #4CAF50;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+#studentSelect:focus,
+#monthSelect:focus {
+  box-shadow: 0 0 5px #4CAF50;
+  outline: none;
+}
+
+/* Кнопки "Применить", "Поставить оценки", "Сохранить", "Домой" */
+#loadButton,
+#editButton,
+#saveButton,
+button[onclick*="window.location.href"] {
+  margin-left: 20px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#loadButton:hover,
+#editButton:hover,
+#saveButton:hover,
+button[onclick*="window.location.href"]:hover {
+  background-color: #3e8e41;
+  transform: scale(1.05);
+}
+
+/* Если кнопка отключена */
+#editButton:disabled,
+#saveButton:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Таблица с оценками (если используется динамически) */
+#gradesTableContainer table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#gradesTableContainer th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+#gradesTableContainer td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+#gradesTableContainer tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#gradesTableContainer td[contenteditable="true"] {
+  background-color: #ffffff;
+  cursor: text;
+}
+
+/* Стиль для контейнера с выбором месяца и кнопки загрузки */
+#month-select-container {
+  margin-left: 20px; /* Отступ от левого края */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+#month-select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #4CAF50;
+  background-color: #f9f9f9;
+  margin-right: 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+#month-select:focus {
+  box-shadow: 0 0 5px #4CAF50;
+  outline: none;
+}
+
+#load-grades-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#load-grades-button:hover {
+  background-color: #45a049;
+}
+
+/* Стиль для таблицы с оценками */
+#grades-table-container {
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 90%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#grades-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+#grades-table-container th, #grades-table-container td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+#grades-table-container th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+#grades-table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#grades-table-container tr:hover {
+  background-color: #e1f7d5;
+}
+
+#grades-table-container td {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+#grades-table-container td:first-child {
+  border-left: 2px solid #4CAF50;
+}
+
+#grades-table-container td:last-child {
+  border-right: 2px solid #4CAF50;
+}
+
+#grades-table-container tr:last-child td {
+  border-bottom: none;
+}
+
+#grades-table-container .empty-cell {
+  background-color: #f0f0f0;
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+#grades-table-container .teacher-cell, 
+#grades-table-container .student-cell {
+  min-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

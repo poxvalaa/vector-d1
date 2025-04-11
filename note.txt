@@ -1,0 +1,62 @@
+// Функция для инициализации diagrams.json
+function initializeDiagrams() {
+  const diagramsData = {};
+
+  const months = [
+    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+    'Январь', 'Февраль', 'Март', 'Апрель', 'Май'
+  ];
+
+  // Генерация диаграмм для каждого ученика
+  users.forEach(user => {
+    if (user.role === 'student') {
+      diagramsData[user.username] = {};
+
+      // Создаем структуру диаграмм для каждого предмета
+      subjects.forEach(subject => {
+        diagramsData[user.username][subject] = {};
+
+        months.forEach(month => {
+          diagramsData[user.username][subject][month] = {
+            grades: [1, 2, 3, 4, 5], // возможные оценки
+            average: 0 // сюда позже будут записываться средние оценки за месяц
+          };
+        });
+      });
+    }
+  });
+
+  // Записываем данные в файл diagrams.json
+  fs.writeFileSync(diagramsFilePath, JSON.stringify(diagramsData, null, 2), 'utf-8');
+  console.log('✅ Файл diagrams.json сгенерирован');
+}
+
+// Вызываем функцию инициализации при старте сервера
+initializeDiagrams();
+
+
+function safeReadJSON(filePath) {
+  if (!fs.existsSync(filePath)) return {};
+  const content = fs.readFileSync(filePath, 'utf-8');
+  if (!content.trim()) return {};
+  try {
+    return JSON.parse(content);
+  } catch (err) {
+    console.error(`Ошибка в JSON ${filePath}:`, err.message);
+    return {};
+  }
+}
+
+// Вызываем инициализацию после определения всех переменных
+initializeGrades();
+
+
+app.get('/api/statistics', (req, res) => {
+  try {
+    // Пытаемся вернуть статистику
+    res.json(subjects); // Это должно быть в формате JSON
+  } catch (err) {
+    console.error('Ошибка при отправке статистики:', err);
+    res.status(500).json({ error: 'Ошибка на сервере' }); // Если ошибка, отправляем 500
+  }
+});

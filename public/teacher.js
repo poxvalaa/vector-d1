@@ -1,4 +1,31 @@
 // teacher.js
+
+function redirectToMain(tabName) {
+    // Переход на index.html с параметром tab
+    window.location.href = `index.html?tab=${tabName}`;
+  }
+
+  // Навешиваем обработчики на кнопки/ссылки
+  document.getElementById("tab1").addEventListener("click", function () {
+    redirectToMain("statistics");
+  });
+
+  document.getElementById("tab2").addEventListener("click", function () {
+    redirectToMain("schedule");
+  });
+
+  document.getElementById("tab3").addEventListener("click", function () {
+    redirectToMain("grades");
+  });
+
+  document.getElementById("profile-button").addEventListener("click", function () {
+    redirectToMain("profile");
+  });
+
+  document.getElementById("logout-button").addEventListener("click", function () {
+    window.location.href = "login.html";
+  });
+
 document.addEventListener('DOMContentLoaded', function () {
   let originalData = {};
   let currentStudent = '';

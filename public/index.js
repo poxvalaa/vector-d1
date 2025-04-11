@@ -291,3 +291,72 @@ function loadStudentCharts() {
     document.getElementById('logout-button').addEventListener('click', () => {
       window.location.href = '/login'; // Выход
     });
+
+// Функция для отображения таблицы с оценками
+function loadGrades(month) {
+  const username = document.getElementById('user').textContent;  // Получаем имя пользователя
+
+  // Запросим данные о оценках за выбранный месяц
+  fetch(`/api/grades/${username}/${month}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      // Создаем таблицу для отображения оценок
+      const tableContainer = document.getElementById('grades-table-container');
+      tableContainer.innerHTML = '';  // Очищаем контейнер
+
+      const table = document.createElement('table');
+      table.classList.add('grades-table');
+
+      // Заголовок таблицы (даты 1-30/31)
+      const headerRow = document.createElement('tr');
+      const subjects = Object.keys(data);  // Получаем список предметов
+
+      const dateHeader = document.createElement('th');
+      dateHeader.textContent = 'Предмет';
+      headerRow.appendChild(dateHeader);
+
+      for (let i = 1; i <= 31; i++) {
+        const dateHeader = document.createElement('th');
+        dateHeader.textContent = i;
+        headerRow.appendChild(dateHeader);
+      }
+
+      table.appendChild(headerRow);
+
+      // Строки таблицы для каждого предмета
+      subjects.forEach(subject => {
+        const row = document.createElement('tr');
+        
+        // Название предмета
+        const subjectCell = document.createElement('td');
+        subjectCell.textContent = subject;
+        row.appendChild(subjectCell);
+
+        // Оценки за каждый день
+        for (let i = 1; i <= 31; i++) {
+          const gradeCell = document.createElement('td');
+          const grade = data[subject][i] || '';  // Если оценки нет — оставляем пустое поле
+          gradeCell.textContent = grade;
+          row.appendChild(gradeCell);
+        }
+
+        table.appendChild(row);
+      });
+
+      // Добавляем таблицу в DOM
+      tableContainer.appendChild(table);
+    })
+    .catch(err => {
+      console.error('Ошибка при загрузке оценок:', err);
+    });
+}
+
+document.getElementById('load-grades-button').addEventListener('click', () => {
+  const month = document.getElementById('month-select').value;
+  loadGrades(month);
+});

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
 </head>
 <body>
 
@@ -61,7 +62,7 @@
       <button id="edit-class-button">Редактировать классы</button>
     </div>
     <div id="my-class-button-container" style="display: none;">
-      <button id="edit-class-button">Мой класс</button>
+      <button id="my-class-button">Мой класс</button>
     </div>
     <div class="logout-button">
       <button id="logout-button">Выйти</button>
@@ -90,8 +91,26 @@
     </div>
 
     <div id="page3" class="content-page hidden">
-      <h2>Страница 3</h2>
-      <p>Это успеваемость.</p>
+      <!-- Контейнер для выбора месяца -->
+<div id="month-select-container">
+  <label for="month-select">Выберите месяц:</label>
+  <select id="month-select">
+    <option value="Сентябрь">Сентябрь</option>
+    <option value="Октябрь">Октябрь</option>
+    <option value="Ноябрь">Ноябрь</option>
+    <option value="Декабрь">Декабрь</option>
+    <option value="Январь">Январь</option>
+    <option value="Февраль">Февраль</option>
+    <option value="Март">Март</option>
+    <option value="Апрель">Апрель</option>
+    <option value="Май">Май</option>
+  </select>
+  <button id="load-grades-button">Загрузить оценки</button>
+</div>
+
+<!-- Контейнер для таблицы -->
+<div id="grades-table-container"></div>
+
     </div>
   </div>
 
