@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Node.js Project</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+  <!-- Основная шапка -->
+  <header class="main-header">
+    <div class="logo">
+      <img src="logo.png" alt="Логотип" />
+    </div>
+    <div class="header-right">
+      <div class="header-text">
+        <p><strong>АНОО ШКОЛА «ВЕКТОР»</strong></p>
+        <p>АВТОНОМНАЯ НЕКОММЕРЧЕСКАЯ</p>
+        <p>ОБЩЕОБРАЗОВАТЕЛЬНАЯ ОРГАНИЗАЦИЯ</p>
+        <p>ШКОЛА «ВЕКТОР»</p>
+      </div>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="header-left">
+      <h1>Дневник</h1>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.724431%2C55.909598&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3A605fc421f914500f3d3cbf9b4b7acf6aa20eeaa94339c63e28a444a47399209d&z=16">г. Мытищи, ул. Лётная, стр. 21Б</a>
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.738143%2C55.912510&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3Aa5c211ab0db43277ca64d3a7e13dacceb52adc77dd65a16510b57381fc29ed0a&z=16">г. Мытищи, Новомытищинский пр-т, д.26а</a>
+      <a href="#">vector-school@mail.com</a>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="tel:+74955949899">+7 (495) 594-98-99</a>
+      <a href="tel:+79362211087">приемная комиссия: +7 (936) 221-10-87</a>
+    </div>
+  </header>
+
+  <!-- Мини-шапка -->
+  <div class="mini-header">
+    <div class="tabs">
+      <a href="#" id="tab1">Статистика</a>
+      <a href="#" id="tab2">Расписание</a>
+      <a href="#" id="tab3">Успеваемость</a>
+    </div>
+    <div class="profile-button">
+      <button id="profile-button">Профиль</button>
+    </div>
+    <!-- Кнопка для редактирования классов (будет видна только если админ) -->
+    <div id="edit-class-button-container" style="display: none;">
+      <button id="edit-class-button">Редактировать классы</button>
+    </div>
+    <div id="my-class-button-container" style="display: none;">
+      <button id="my-class-button">Мой класс</button>
+    </div>
+    <div class="logout-button">
+      <button id="logout-button">Выйти</button>
+    </div>
+  </div>
+
+  <!-- Контент -->
+  <div class="content">
+    <div id="profile" class="profile-content active">
+      <h2>Профиль пользователя</h2>
+      <div class="user-info">
+        <p><strong>Текущий пользователь:</strong> <span id="user"></span></p>
+        <p><strong>Роль:</strong> <span id="role"></span></p>
+      </div>
+    </div>
+
+    <div id="page1" class="content-page hidden">
+      <div id="charts-container"></div>
+
+    </div>
+
+    <div id="page2" class="content-page hidden">
+      <h2>Страница 2</h2>
+      <p>Это расписание.</p>
+    </div>
+
+    <div id="page3" class="content-page hidden">
+  <!-- Контейнер для выбора месяца -->
+  <div id="student-grades-section" style="display: none;">
+  <!-- Контейнер для выбора месяца -->
+  <div id="month-select-container">
+    <label for="month-select">Выберите месяц:</label>
+    <select id="month-select">
+      <option value="Сентябрь">Сентябрь</option>
+      <option value="Октябрь">Октябрь</option>
+      <option value="Ноябрь">Ноябрь</option>
+      <option value="Декабрь">Декабрь</option>
+      <option value="Январь">Январь</option>
+      <option value="Февраль">Февраль</option>
+      <option value="Март">Март</option>
+      <option value="Апрель">Апрель</option>
+      <option value="Май">Май</option>
+    </select>
+    <button id="load-grades-button">Загрузить оценки</button>
+  </div>
+
+  <!-- Контейнер для таблицы -->
+  <div id="grades-table-container"></div> <!-- Этот контейнер будет заполняться -->
+</div>
+
+</div>
+  </div>
+
+    <script src="index.js"></script>
+<script>
+    // Обработчики для кнопок
+    document.getElementById('edit-class-button').addEventListener('click', () => {
+      window.location.href = '/admin.html'; // Редирект на страницу для админа
+    });
+
+    document.getElementById('my-class-button').addEventListener('click', () => {
+      window.location.href = '/teacher.html'; // Редирект на страницу для учителя
+    });
+  </script>
+</body>
+</html>

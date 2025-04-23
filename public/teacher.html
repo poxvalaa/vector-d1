@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Мой класс</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    table { 
+      border-collapse: collapse;
+      width: auto; /* Убираем фиксированную ширину */
+      margin: 0 auto; /* Центрируем таблицу */
+    }
+    th, td { 
+      border: 1px solid #ccc; 
+      padding: 8px; 
+      text-align: center; 
+      min-width: 80px; /* Устанавливаем минимальную ширину для ячеек */
+    }
+    td[contenteditable="true"] { 
+      background-color: #fffacd; 
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <img src="logo.png" alt="Логотип" />
+    </div>
+    <div class="header-right">
+      <div class="header-text">
+        <p><strong>АНОО ШКОЛА «ВЕКТОР»</strong></p>
+        <p>АВТОНОМНАЯ НЕКОММЕРЧЕСКАЯ</p>
+        <p>ОБЩЕОБРАЗОВАТЕЛЬНАЯ ОРГАНИЗАЦИЯ</p>
+        <p>ШКОЛА «ВЕКТОР»</p>
+      </div>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="header-left">
+      <h1>Дневник</h1>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.724431%2C55.909598&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3A605fc421f914500f3d3cbf9b4b7acf6aa20eeaa94339c63e28a444a47399209d&z=16">г. Мытищи, ул. Лётная, стр. 21Б</a>
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.738143%2C55.912510&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3Aa5c211ab0db43277ca64d3a7e13dacceb52adc77dd65a16510b57381fc29ed0a&z=16">г. Мытищи, Новомытищинский пр-т, д.26а</a>
+      <a href="#">vector-school@mail.com</a>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="tel:+74955949899">+7 (495) 594-98-99</a>
+      <a href="tel:+79362211087">приемная комиссия: +7 (936) 221-10-87</a>
+    </div>
+  </header>
+
+  <!-- Мини-шапка -->
+  <div class="mini-header">
+    <div class="tabs">
+      <a href="#" id="tab1">Статистика</a>
+      <a href="#" id="tab2">Расписание</a>
+      <a href="#" id="tab3">Успеваемость</a>
+    </div>
+    <div class="profile-button">
+      <button id="profile-button">Профиль</button>
+    </div>
+    <!-- Кнопка для редактирования классов (будет видна только если админ) -->
+    <div id="edit-class-button-container" style="display: none;">
+      <button id="edit-class-button">Редактировать классы</button>
+    </div>
+    <div id="my-class-button-container" style="display: none;">
+      <button id="my-class-button">Мой класс</button>
+    </div>
+    <div class="logout-button">
+      <button id="logout-button">Выйти</button>
+    </div>
+  </div>
+  <h1>Поставить оценки</h1>
+  <label for="studentSelect">Ученик:</label>
+  <select id="studentSelect"></select>
+
+  <label for="monthSelect">Месяц:</label>
+  <select id="monthSelect">
+    <option>Сентябрь</option><option>Октябрь</option><option>Ноябрь</option>
+    <option>Декабрь</option><option>Январь</option><option>Февраль</option>
+    <option>Март</option><option>Апрель</option><option>Май</option>
+  </select>
+
+  <button id="loadButton">Применить</button>
+  <button id="editButton" disabled>Поставить оценки</button>
+  <button id="saveButton" disabled>Сохранить</button>
+
+  <div id="gradesTableContainer"></div>
+
+<hr>
+<h2>Домашнее задание</h2>
+<button id="create-homework-button">Создать домашнее задание</button>
+
+<div id="homework-controls" style="display: none; margin-top: 10px;">
+  <label for="weekSelect">Выберите неделю:</label>
+  <input type="text" id="weekSelect" placeholder="например, 02.09-06.09" />
+  <button id="apply-week-button">Применить</button>
+</div>
+
+<div id="homework-tables"></div>
+
+
+  <script src="teacher.js"></script> <!-- Внешний JavaScript файл -->
+</body>
+</html>

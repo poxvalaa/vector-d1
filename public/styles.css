@@ -1,0 +1,828 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Общий отступ слева */
+.container {
+  margin-left: 20px; /* Отступ от левого края для всех элементов */
+}
+
+/* Стиль для заголовка */
+h2 {
+  margin-left: 20px; /* Отступ для заголовка */
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Стиль для выпадающего списка */
+.green-select {
+  margin-left: 20px; /* Отступ слева */
+  padding: 8px;
+  border-radius:4px;
+  border: 1px solid #4CAF50;
+  background-color: #f1f1f1;
+  margin-bottom: 20px; /* Отступ снизу, чтобы разделить с кнопкой */
+}
+
+/* Стиль для кнопки */
+.green-button {
+  margin-left: 20px; /* Отступ слева */
+  padding: 10px 15px; 
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.green-button:hover {
+  background-color: #45a049; 
+  transform: scale(1.05); /* Легкая анимация увеличения */
+}
+
+/* Стиль для таблицы */
+.styled-table {
+  margin-left: 20px;
+  width: 90%;
+  border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.styled-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.styled-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.styled-table tr:hover {
+  background-color: #ddd;
+}
+
+
+
+/* Стиль для основной шапки */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-left h1 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.header-right {
+  text-align: bottom;
+}
+
+.header-text p {
+  margin: 5px 0;
+}
+
+.logo img {
+  height: 90px; /* Adjust size of the logo */
+  width: auto;
+  margin-top: 5px;
+}
+
+/* Мини-шапка */
+.mini-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4CAF50;
+  padding: 10px 30px;
+}
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;  /* Сделаем, чтобы элементы слева растягивались */
+  justify-content: flex-start;
+}
+
+.tabs a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 1s ease;
+}
+
+.tabs a:hover {
+  text-decoration: underline;
+  color: yellow;
+}
+
+/* Профиль, Редактировать классы и Выйти — кнопки справа */
+/* Профиль, Редактировать классы и Выйти — кнопки справа */
+.profile-button, #edit-class-button,.logout-button, #edit-class-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.profile-button button, #edit-class-button, .logout-button button {
+  background-color: #ffffff;
+  color: #4CAF50;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.profile-button button:hover, #edit-class-button:hover, .logout-button button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#edit-class-button-container {
+  margin-left: 10px; /* Добавить немного отступа между кнопками */
+}
+
+.logout-button {
+  margin-left: 10px; /* Добавляем отступ между кнопками "Редактировать классы" и "Выйти" */
+}
+
+
+/* Стили для контента */
+.content {
+  padding: 20px;
+}
+
+.content-page {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.content-page.active {
+  display: block;
+  opacity: 1;
+}
+
+.content-page.hidden {
+  display: none;
+}
+
+.profile-content {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.profile-content.hidden {
+  opacity: 0;
+  visibility:hidden;
+  pointer-events: none;
+}
+
+/* Стили для кнопок и ссылок */
+.links a {
+  color: grey;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  display: grid;
+}
+
+/* Стили для заголовка "Дневник" */
+.header-left h1 {
+  font-family: 'Roboto Slab', serif; /* Применяем красивый шрифт */
+  font-size: 36px;
+  color: #333; /* Можно поменять цвет на ваш выбор */
+  margin: 0;
+  font-weight: 700; /* Сделать жирным */
+}
+
+/* Стили для текста в header-left1 */
+/* Специфичный стиль для заголовков внутри header-left1 */
+.main-header .header-left1 h1 {
+  color: white; /* Сделать текст белым */
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.logout button {
+  padding: 8px 15px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.logout button:hover {
+  background-color: #ff4500;
+}
+/* Стиль для контента */
+.profile-content {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.profile-content.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content-page {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.content-page.active {
+  display: block;
+  opacity: 1;
+}
+
+.content-page.hidden {
+  display: none;
+}
+
+/* Стили для контента, который будет плавно появляться */
+.content-page {
+  opacity: 0; /* По умолчанию контент скрыт */
+  visibility: hidden; /* По умолчанию контент скрыт */
+  transition: opacity 0.5s ease, visibility 0s 0.5s; /* Плавный переход */
+}
+
+.content-page.active {
+  opacity: 1; /* Когда активен — контент видим */
+  visibility: visible; /* Когда активен — контент видим */
+  transition: opacity 0.5s ease, visibility 0s 0s; /* Плавное появление без задержки */
+}
+
+/* Страница с информацией о профиле */
+.profile-content {
+  opacity: 1; /* Профиль всегда видим */
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0s 0.5s;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Пример стилей */
+.role-specific-profile {
+  display: none;
+}
+
+.role-specific-profile.hidden {
+  display: none;
+}
+
+.profile-content {
+  padding: 20px;
+}
+
+.profile-content.active {
+  display: block;
+}
+
+#admin-profile,
+#teacher-profile,
+#student-profile {
+  margin-top: 20px;
+}
+
+
+/* Основной стиль для таблицы */
+#classes-table {
+  width: 100%;
+  border-collapse: separate; /* Разделение ячеек */
+  border-spacing: 0; /* Убираем промежутки между ячейками */
+  border-radius: 10px; /* Закругленные углы для таблицы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для выделения */
+  overflow: hidden; /* Чтобы края таблицы не выходили за пределы */
+  margin: 20px 0;
+}
+
+/* Заголовки таблицы */
+#classes-table thead {
+  background-color: #4CAF50; /* Зеленый фон для заголовков */
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+#classes-table th {
+  padding: 12px 15px; /* Отступы внутри ячеек */
+  border-top-left-radius: 10px; /* Закругленные углы у верхнего левого угла */
+  border-top-right-radius:10px; /* Закругленные углы у верхнего правого угла */
+}
+
+#classes-table th:first-child {
+  border-left: 2px solid #4CAF50; /* Левый разделитель */
+}
+
+#classes-table th:last-child {
+  border-right: 2px solid #4CAF50; /* Правый разделитель */
+}
+
+/* Строки данных таблицы */
+#classes-table tbody tr {
+  background-color: #f9f9f9; /* Светлый фон для строк */
+  transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+}
+
+#classes-table tbody tr:hover {
+  background-color: #e1f7d5; /* Подсветка строки при наведении */
+}
+
+#classes-table td {
+  padding: 10px 15px; /* Отступы внутри ячеек */
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Легкие разделительные линии между строками */
+  border-left: 1px solid #ddd; /* Разделительные линии между ячейками */
+}
+
+/* Закругленные углы для ячеек */
+#classes-table td:first-child {
+  border-left: 2px solid #4CAF50; /* Левый разделитель */
+}
+
+#classes-table td:last-child {
+  border-right: 2px solid #4CAF50; /* Правый разделитель */
+}
+
+#classes-table tr:last-child td {
+  border-bottom: none; /* Убираем нижнюю границу у последней строки */
+}
+
+/* Стиль для ячеек, которые содержат текст "Учитель" и "Ученики" */
+#classes-table td[id^="teacher-"],
+#classes-table td[id^="students-"] {
+  min-width: 150px; /* Минимальная ширина для ячеек */
+  white-space: nowrap; /* Не допускаем переноса текста */
+  overflow: hidden; /* Обрезаем лишний текст */
+  text-overflow: ellipsis; /* Добавляем многоточие для длинного текста */
+}
+
+/* Стиль для пустых ячеек */
+#classes-table td.empty-cell {
+  background-color: #f0f0f0; /* Светлый фон для пустых ячеек */
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+/* Применяем стили и к таблице расписания */
+#schedule-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+#schedule-table thead {
+  background-color: #4CAF50;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+#schedule-table th,
+#schedule-table td {
+  padding: 12px 15px;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+#schedule-table tbody tr {
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+#schedule-table tbody tr:hover {
+  background-color: #e1f7d5;
+}
+
+#schedule-table td:first-child {
+  border-left: 2px solid #4CAF50;
+}
+
+#schedule-table td:last-child {
+  border-right: 2px solid #4CAF50;
+}
+
+#schedule-table tr:last-child td {
+  border-bottom: none;
+}
+
+.green-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.green-button:hover {
+  background-color: #ffffff;
+  color: #4CAF50;
+}
+
+.green-select {
+  margin-left: 20px; /* Отступ слева */
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #4CAF50;
+  background-color: #f1f1f1;
+  margin-bottom: 20px; /* Отступ снизу, чтобы разделить с кнопкой */
+}
+
+#user-form input,
+#user-form select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#edit-schedule-button {
+  display: block;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+#edit-schedule-button:hover {
+  transform: scale(1.05); /* Эффект увеличения для кнопки */
+}
+
+#add-user-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#add-user-button:hover {
+  background-color: #45a049;
+  flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+#user-form input,
+#user-form select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#add-user-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#add-user-button:hover {
+  background-color: #45a049;
+}
+
+#my-class-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px; /* Отступ как у других кнопок */
+}
+
+#my-class-button {
+  background-color: #ffffff;
+  color: #4CAF50;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#my-class-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Стили для заголовка "Мой класс" */
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+/* Стили для селекторов "Ученик" и "Месяц" */
+label[for="studentSelect"],
+label[for="monthSelect"] {
+  margin-left: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+#studentSelect,
+#monthSelect {
+  margin: 10px 20px 20px 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #4CAF50;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+#studentSelect:focus,
+#monthSelect:focus {
+  box-shadow: 0 0 5px #4CAF50;
+  outline: none;
+}
+
+/* Кнопки "Применить", "Поставить оценки", "Сохранить", "Домой" */
+#loadButton,
+#editButton,
+#saveButton,
+button[onclick*="window.location.href"] {
+  margin-left: 20px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#loadButton:hover,
+#editButton:hover,
+#saveButton:hover,
+button[onclick*="window.location.href"]:hover {
+  background-color: #3e8e41;
+  transform: scale(1.05);
+}
+
+/* Если кнопка отключена */
+#editButton:disabled,
+#saveButton:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Таблица с оценками (если используется динамически) */
+#gradesTableContainer table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#gradesTableContainer th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+#gradesTableContainer td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+#gradesTableContainer tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#gradesTableContainer td[contenteditable="true"] {
+  background-color: #ffffff;
+  cursor: text;
+}
+
+/* Стиль для контейнера с выбором месяца и кнопки загрузки */
+#month-select-container {
+  margin-left: 20px; /* Отступ от левого края */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+#month-select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #4CAF50;
+  background-color: #f9f9f9;
+  margin-right: 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+#month-select:focus {
+  box-shadow: 0 0 5px #4CAF50;
+  outline: none;
+}
+
+#load-grades-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#load-grades-button:hover {
+  background-color: #45a049;
+}
+
+/* Стиль для таблицы с оценками */
+#grades-table-container {
+  margin-top: 30px;
+  margin-left: 20px;
+  width: 90%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#grades-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+#grades-table-container th, #grades-table-container td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+#grades-table-container th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+#grades-table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#grades-table-container tr:hover {
+  background-color: #e1f7d5;
+}
+
+#grades-table-container td {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+#grades-table-container td:first-child {
+  border-left: 2px solid #4CAF50;
+}
+
+#grades-table-container td:last-child {
+  border-right: 2px solid #4CAF50;
+}
+
+#grades-table-container tr:last-child td {
+  border-bottom: none;
+}
+
+#grades-table-container .empty-cell {
+  background-color: #f0f0f0;
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+#grades-table-container .teacher-cell, 
+#grades-table-container .student-cell {
+  min-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#classes-table,
+#schedule-table {
+  width: auto;
+  max-width: 95%;
+  margin-left: 20px;
+  display: inline-block;
+}
+
+#charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+}
+
+canvas {
+  width: 100%;
+  max-width: 600px; /* Ограничим максимальную ширину графика */
+  height: 300px;
+  border: 1px solid #ccc; /* Добавим рамку, чтобы было видно, где начинается график */
+}
+
+/* Контейнер формы создания пользователя */
+#create-user-container {
+  margin-left: 20px;
+  margin-top: 30px;
+  padding: 20px;
+  max-width: 500px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Заголовок формы */
+#create-user-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+/* Метки для полей ввода */
+#create-user-container label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Поля ввода */
+#create-user-container input[type="text"],
+#create-user-container input[type="password"],
+#create-user-container select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+#create-user-container input:focus,
+#create-user-container select:focus {
+  box-shadow: 0 0 5px #4CAF50;
+  outline: none;
+}
+
+/* Кнопка "Создать пользователя" */
+#create-user-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#create-user-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}

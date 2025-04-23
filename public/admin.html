@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редактирование классов</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Основной Header -->
+  <header class="main-header">
+    <div class="logo">
+      <img src="logo.png" alt="Логотип" />
+    </div>
+    <div class="header-right">
+      <div class="header-text">
+        <p><strong>АНОО ШКОЛА «ВЕКТОР»</strong></p>
+        <p>АВТОНОМНАЯ НЕКОММЕРЧЕСКАЯ</p>
+        <p>ОБЩЕОБРАЗОВАТЕЛЬНАЯ ОРГАНИЗАЦИЯ</p>
+        <p>ШКОЛА «ВЕКТОР»</p>
+      </div>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="header-left">
+      <h1>Дневник</h1>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.724431%2C55.909598&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3A605fc421f914500f3d3cbf9b4b7acf6aa20eeaa94339c63e28a444a47399209d&z=16">г. Мытищи, ул. Лётная, стр. 21Б</a>
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.738143%2C55.912510&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3Aa5c211ab0db43277ca64d3a7e13dacceb52adc77dd65a16510b57381fc29ed0a&z=16">г. Мытищи, Новомытищинский пр-т, д.26а</a>
+      <a href="#">vector-school@mail.com</a>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="tel:+74955949899">+7 (495) 594-98-99</a>
+      <a href="tel:+79362211087">приемная комиссия: +7 (936) 221-10-87</a>
+    </div>
+  </header>
+
+  <!-- Мини-шапка -->
+  <div class="mini-header">
+    <div class="tabs">
+      <a href="index.html?tab=statistics" id="tab1">Статистика</a>
+      <a href="index.html?tab=schedule" id="tab2">Расписание</a>
+      <a href="index.html?tab=performance" id="tab3">Успеваемость</a>
+    </div>
+
+    <div class="profile-button">
+      <button id="profile-button">Профиль</button>
+    </div>
+
+    <div class="logout-button">
+      <button id="logout-button" onclick="logout()">Выйти</button>
+    </div>
+  </div>
+<h2>Редактировать классы</h2>
+  <div class="content">
+    
+
+    <!-- Список пользователей, не состоящих в классах -->
+    <h3>Пользователи вне классов</h3>
+    <ul id="users-list" ondrop="dropToUsers(event)" ondragover="allowDrop(event)">
+  <!-- сюда будут выводиться пользователи -->
+</ul>
+
+
+    <!-- Таблица классов -->
+    <table id="classes-table" style="display:none;">
+      <thead>
+        <tr>
+          <th>Номер класса</th>
+          <th>Учитель</th>
+          <th>Ученики</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Здесь будут отображаться классы -->
+      </tbody>
+    </table>
+
+    <button id="edit-button" class="green-button">Изменить</button>
+
+    <button id="save-button" class="green-button" style="display:none;" onclick="saveChanges()">Сохранить</button>
+
+  </div>
+  <!-- Кнопка и выбор класса -->
+<!-- Кнопка и выбор класса -->
+<h2>Редактировать расписание</h2>
+
+<!-- Выпадающий список для выбора класса -->
+<select id="class-select" class="green-select">
+  <option disabled selected>Выберите класс</option>
+</select>
+
+<!-- Кнопка для изменения расписания (перемещена вниз) -->
+<button class="green-button" id="edit-schedule-button" onclick="loadSchedule()">Изменить расписание</button>
+
+<!-- Таблица расписания -->
+<table id="schedule-table" class="styled-table" style="margin-top: 20px; display: none;">
+  <thead>
+    <tr>
+      <th>День</th>
+      <th>Уроки (1–8)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<!-- Кнопка сохранения -->
+<button id="save-schedule" class="green-button" style="display:none;" onclick="saveSchedule()">Сохранить расписание</button>
+
+<div id="create-user-container">
+  <h2>Создать нового пользователя</h2>
+  
+  <form id="user-form">
+    <label for="username">Имя пользователя</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Пароль</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="role">Роль</label>
+    <select id="role" name="role">
+      <option value="student">Ученик</option>
+      <option value="teacher">Учитель</option>
+      <option value="admin">Администратор</option>
+    </select>
+
+    <button type="submit" id="create-user-button">Создать пользователя</button>
+  </form>
+</div>
+
+
+
+
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+// Функция для инициализации diagrams.json
+function initializeDiagrams() {
+  const diagramsData = {};
+
+  const months = [
+    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+    'Январь', 'Февраль', 'Март', 'Апрель', 'Май'
+  ];
+
+  // Генерация диаграмм для каждого ученика
+  users.forEach(user => {
+    if (user.role === 'student') {
+      diagramsData[user.username] = {};
+
+      // Создаем структуру диаграмм для каждого предмета
+      subjects.forEach(subject => {
+        diagramsData[user.username][subject] = {};
+
+        months.forEach(month => {
+          diagramsData[user.username][subject][month] = {
+            grades: [1, 2, 3, 4, 5], // возможные оценки
+            average: 0 // сюда позже будут записываться средние оценки за месяц
+          };
+        });
+      });
+    }
+  });
+
+  // Записываем данные в файл diagrams.json
+  fs.writeFileSync(diagramsFilePath, JSON.stringify(diagramsData, null, 2), 'utf-8');
+  console.log('✅ Файл diagrams.json сгенерирован');
+}
+
+// Вызываем функцию инициализации при старте сервера
+initializeDiagrams();
+
+
+function safeReadJSON(filePath) {
+  if (!fs.existsSync(filePath)) return {};
+  const content = fs.readFileSync(filePath, 'utf-8');
+  if (!content.trim()) return {};
+  try {
+    return JSON.parse(content);
+  } catch (err) {
+    console.error(`Ошибка в JSON ${filePath}:`, err.message);
+    return {};
+  }
+}
+
+// Вызываем инициализацию после определения всех переменных
+initializeGrades();
+
+
+app.get('/api/statistics', (req, res) => {
+  try {
+    // Пытаемся вернуть статистику
+    res.json(subjects); // Это должно быть в формате JSON
+  } catch (err) {
+    console.error('Ошибка при отправке статистики:', err);
+    res.status(500).json({ error: 'Ошибка на сервере' }); // Если ошибка, отправляем 500
+  }
+});
+
+
+
+
+
+
+const currentUser = localStorage.getItem('loggedInUser');
+if (!currentUser) {
+  window.location.href = '/login.html'; // Перенаправление, если пользователь не залогинен
+}
+localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+
+const currentUser = localStorage.getItem('loggedInUser');
+if (!currentUser) {
+  window.location.href = '/login.html'; // Перенаправление, если пользователь не залогинен
+}
+localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+
+
+
+if (fs.existsSync(gradesPath)) {
+    const currentData = fs.readFileSync(gradesPath, 'utf8');
+    if (currentData.trim() !== '' && currentData.trim() !== '{}') {
+      console.log('grades.json уже существует и не пустой — пропускаем генерацию');
+      return;
+    }
+  }
+  
+  
+  
+
+1. на admin.html не работают кнопки профиль и выйти
+2. на admin.html, выберите класс 1-11 2 раза появляется
+3. на teacher.html сделать систему с выставлением дз
+3. на index.html сделать статистику и расписание+дз
+4. css для login.html
+5. защиту для admin.html и teacher.html
+
+
+
+
+fetch('/user')
+  .then(res => {
+    if (!res.ok) {
+      window.location.href = '/login'; // если не авторизован — на логин
+    }
+    return res.json();
+  })
+  .then(data => {
+    document.getElementById('user').textContent = data.username;
+    document.getElementById('role').textContent = data.role;
+
+    // Если пользователь — студент, показываем диаграммы
+    if (data.role === 'student') {
+      fetch('/api/statistics')
+        .then(res => res.json())
+        .then(subjects => {
+          fetch('/api/diagrams/' + data.username)
+            .then(res => res.json())
+            .then(diagrams => {
+              const page1 = document.getElementById('page1');
+              page1.innerHTML = ''; // Очищаем старые данные
+
+              // Для каждого предмета создаем диаграмму
+              subjects.forEach(subject => {
+                const subjectData = diagrams[data.username][subject];
+                const chartContainer = document.createElement('div');
+                chartContainer.classList.add('chart-container');
+
+                // Создаем контейнер для диаграммы
+                const chartTitle = document.createElement('h3');
+                chartTitle.textContent = subject;
+                chartContainer.appendChild(chartTitle);
+
+                const chartCanvas = document.createElement('canvas');
+                chartContainer.appendChild(chartCanvas);
+                page1.appendChild(chartContainer);
+
+                // Данные для диаграммы
+                const months = [
+                  'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+                  'Январь', 'Февраль', 'Март', 'Апрель', 'Май'
+                ];
+
+                const labels = months;
+                const dataPoints = months.map(month => {
+                  const grades = subjectData[month].grades; // Оценки
+                  const average = subjectData[month].average; // Средняя оценка
+                  return average;
+                });
+
+                // Генерация диаграммы
+                const chart = new Chart(chartCanvas, {
+                  type: 'line',
+                  data: {
+                    labels: labels,
+                    datasets: [{
+                      label: 'Средний балл',
+                      data: dataPoints,
+                      borderColor: '#4CAF50',
+                      fill: false
+                    }]
+                  },
+                  options: {
+                    responsive: true,
+                    scales: {
+                      y: { min: 1, max: 5, ticks: { stepSize: 1 } }
+                    }
+                  }
+                });
+              });
+            });
+        });
+    }
+    if (data.role === 'student') {
+  document.getElementById('student-grades-section').style.display = 'block';
+} else {
+  document.getElementById('student-grades-section').style.display = 'none';
+}
+    // Показываем кнопку редактирования классов, если роль админ
+    if (data.role === 'admin') {
+      document.getElementById('edit-class-button-container').style.display = 'block'; // Показываем кнопку для админа
+    }
+    // Показываем кнопку "Мой класс", если роль учитель
+    if (data.role === 'teacher') {
+      document.getElementById('my-class-button-container').style.display = 'block'; // Показываем кнопку для учителя
+    }
+  })
+  .catch(err => {
+    console.error('Ошибка при получении данных пользователя:', err);
+  });
+
+
+function createCharts(subjects) {
+  // Отображаем диаграммы для каждого предмета
+  const page1 = document.getElementById('page1');
+  page1.innerHTML = ''; // Очищаем страницу
+
+  const months = ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'];
+  subjects.forEach(subject => {
+    const chartContainer = document.createElement('div');
+    chartContainer.classList.add('chart-container');
+    const chartTitle = document.createElement('h3');
+    chartTitle.textContent = subject;
+    chartContainer.appendChild(chartTitle);
+
+    // Создаем диаграмму для каждого предмета
+    const canvas = document.createElement('canvas');
+    chartContainer.appendChild(canvas);
+    page1.appendChild(chartContainer);
+
+    const chartData = {
+      labels: months,
+      datasets: [{
+        label: `Средний балл по предмету ${subject}`,
+        data: months.map(month => Math.random() * 5), // Здесь данные для диаграммы (замените на реальные данные)
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+      }]
+    };
+
+    new Chart(canvas, {
+      type: 'line',
+      data: chartData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 5,
+          },
+        },
+      },
+    });
+  });
+}
+
+// Функция для смены контента
+function showPage(pageId) {
+  // Скрываем профиль
+  document.getElementById('profile').classList.remove('active');
+  document.getElementById('profile').classList.add('hidden');
+
+  // Скрываем все страницы контента
+  const pages = document.querySelectorAll('.content-page');
+  pages.forEach(page => {
+    page.classList.remove('active');
+    page.classList.add('hidden');
+  });
+
+  // Показать выбранную страницу
+  const pageToShow = document.getElementById(pageId);
+  if (pageToShow) {
+    pageToShow.classList.remove('hidden');
+    pageToShow.classList.add('active');
+  }
+
+  // Загружаем диаграммы, если это страница "Статистика" для ученика
+  if (pageId === 'page1' && document.getElementById('role').textContent === 'student') {
+    loadStudentCharts(); // Загружаем диаграммы для ученика
+  }
+}
+
+
+// Обработчики для вкладок
+document.getElementById('tab1').addEventListener('click', () => {
+  showPage('page1');
+  hideStatsForTeachersAndAdmins();
+});
+document.getElementById('tab2').addEventListener('click', () => showPage('page2'));
+document.getElementById('tab3').addEventListener('click', () => showPage('page3'));
+
+// Обработчик для кнопки "Профиль"
+// Обработчик для кнопки "Профиль"
+document.getElementById('profile-button').addEventListener('click', () => {
+  // Скрываем страницы 1, 2, 3
+  document.getElementById('page1').classList.add('hidden');
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.add('hidden');
+
+  // Показываем профиль
+  document.getElementById('profile').classList.remove('hidden');
+  document.getElementById('profile').classList.add('active');
+});
+
+
+// Обработчик для кнопки "Выйти"
+document.getElementById('logout-button').addEventListener('click', () => {
+  window.location.href = '/login'; // Выход
+});
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Node.js Project</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+  <!-- Основная шапка -->
+  <header class="main-header">
+    <div class="logo">
+      <img src="logo.png" alt="Логотип" />
+    </div>
+    <div class="header-right">
+      <div class="header-text">
+        <p><strong>АНОО ШКОЛА «ВЕКТОР»</strong></p>
+        <p>АВТОНОМНАЯ НЕКОММЕРЧЕСКАЯ</p>
+        <p>ОБЩЕОБРАЗОВАТЕЛЬНАЯ ОРГАНИЗАЦИЯ</p>
+        <p>ШКОЛА «ВЕКТОР»</p>
+      </div>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="header-left">
+      <h1>Дневник</h1>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.724431%2C55.909598&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3A605fc421f914500f3d3cbf9b4b7acf6aa20eeaa94339c63e28a444a47399209d&z=16">г. Мытищи, ул. Лётная, стр. 21Б</a>
+      <a href="https://yandex.ru/maps/10740/mytischi/?from=api-maps&ll=37.738143%2C55.912510&mode=usermaps&origin=jsapi_2_1_79&um=constructor%3Aa5c211ab0db43277ca64d3a7e13dacceb52adc77dd65a16510b57381fc29ed0a&z=16">г. Мытищи, Новомытищинский пр-т, д.26а</a>
+      <a href="#">vector-school@mail.com</a>
+    </div>
+    <div class="header-left1">
+      <h1>1 2 3</h1>
+    </div>
+    <div class="links">
+      <a href="tel:+74955949899">+7 (495) 594-98-99</a>
+      <a href="tel:+79362211087">приемная комиссия: +7 (936) 221-10-87</a>
+    </div>
+  </header>
+
+  <!-- Мини-шапка -->
+  <div class="mini-header">
+    <div class="tabs">
+      <a href="#" id="tab1">Статистика</a>
+      <a href="#" id="tab2">Расписание</a>
+      <a href="#" id="tab3">Успеваемость</a>
+    </div>
+    <div class="profile-button">
+      <button id="profile-button">Профиль</button>
+    </div>
+    <!-- Кнопка для редактирования классов (будет видна только если админ) -->
+    <div id="edit-class-button-container" style="display: none;">
+      <button id="edit-class-button">Редактировать классы</button>
+    </div>
+    <div id="my-class-button-container" style="display: none;">
+      <button id="my-class-button">Мой класс</button>
+    </div>
+    <div class="logout-button">
+      <button id="logout-button">Выйти</button>
+    </div>
+  </div>
+
+  <!-- Контент -->
+  <div class="content">
+    <div id="profile" class="profile-content active">
+      <h2>Профиль пользователя</h2>
+      <div class="user-info">
+        <p><strong>Текущий пользователь:</strong> <span id="user"></span></p>
+        <p><strong>Роль:</strong> <span id="role"></span></p>
+      </div>
+    </div>
+
+    <div id="page1" class="content-page hidden">
+      <div id="charts-container"></div>
+
+    </div>
+
+    <div id="page2" class="content-page hidden">
+      <h2>Страница 2</h2>
+      <p>Это расписание.</p>
+    </div>
+
+    <div id="page3" class="content-page hidden">
+  <!-- Контейнер для выбора месяца -->
+  <div id="student-grades-section" style="display: none;">
+  <!-- Контейнер для выбора месяца -->
+  <div id="month-select-container">
+    <label for="month-select">Выберите месяц:</label>
+    <select id="month-select">
+      <option value="Сентябрь">Сентябрь</option>
+      <option value="Октябрь">Октябрь</option>
+      <option value="Ноябрь">Ноябрь</option>
+      <option value="Декабрь">Декабрь</option>
+      <option value="Январь">Январь</option>
+      <option value="Февраль">Февраль</option>
+      <option value="Март">Март</option>
+      <option value="Апрель">Апрель</option>
+      <option value="Май">Май</option>
+    </select>
+    <button id="load-grades-button">Загрузить оценки</button>
+  </div>
+
+  <!-- Контейнер для таблицы -->
+  <div id="grades-table-container"></div> <!-- Этот контейнер будет заполняться -->
+</div>
+
+</div>
+  </div>
+
+    <script src="index.js"></script>
+<script>
+    // Обработчики для кнопок
+    document.getElementById('edit-class-button').addEventListener('click', () => {
+      window.location.href = '/admin.html'; // Редирект на страницу для админа
+    });
+
+    document.getElementById('my-class-button').addEventListener('click', () => {
+      window.location.href = '/teacher.html'; // Редирект на страницу для учителя
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Загрузка данных пользователя
+  fetch('/user')
+    .then(res => {
+      if (!res.ok) {
+        window.location.href = '/login'; // если не авторизован — на логин
+      }
+      return res.json();
+    })
+    .then(data => {
+      document.getElementById('user').textContent = data.username;
+      document.getElementById('role').textContent = data.role;
+
+      // Показываем/скрываем элементы в зависимости от роли
+      if (data.role === 'student') {
+        document.getElementById('student-grades-section').style.display = 'block';
+      } else {
+        document.getElementById('student-grades-section').style.display = 'none';
+      }
+
+      if (data.role === 'admin') {
+        document.getElementById('edit-class-button-container').style.display = 'block';
+      }
+
+      if (data.role === 'teacher') {
+        document.getElementById('my-class-button-container').style.display = 'block';
+      }
+    })
+    .catch(err => {
+      console.error('Ошибка при получении данных пользователя:', err);
+    });
+
+  // Функция для смены контента
+  function showPage(pageId) {
+    document.getElementById('profile').classList.remove('active');
+    document.getElementById('profile').classList.add('hidden');
+
+    const pages = document.querySelectorAll('.content-page');
+    pages.forEach(page => {
+      page.classList.remove('active');
+      page.classList.add('hidden');
+    });
+
+    const pageToShow = document.getElementById(pageId);
+    if (pageToShow) {
+      pageToShow.classList.remove('hidden');
+      pageToShow.classList.add('active');
+    }
+
+    // Статистика больше не загружается
+    if (pageId === 'page1') {
+      loadStatistics();
+    }
+  }
+
+  // Функция для загрузки статистики и построения диаграмм
+  function loadStatistics() {
+    const username = document.getElementById('user').textContent;
+    const months = ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'];
+    const subjects = [];
+    const averages = {};
+
+    // Для каждого месяца получаем данные
+    Promise.all(months.map(month => {
+      return fetch(`/api/grades/${username}/${month}`)
+        .then(res => res.json())
+        .then(data => {
+          // Для каждого месяца собираем средние оценки по предметам
+          for (let subject in data) {
+            if (!subjects.includes(subject)) {
+              subjects.push(subject);
+            }
+
+            const subjectData = data[subject];
+            let total = 0;
+            let count = 0;
+
+            // Считаем среднюю оценку для каждого дня
+            for (let day = 1; day <= 31; day++) {
+              if (subjectData[day]) {
+                total += subjectData[day];
+                count++;
+              }
+            }
+
+            const avg = count > 0 ? total / count : 0;
+
+            if (!averages[subject]) {
+              averages[subject] = [];
+            }
+
+            averages[subject].push(avg);
+          }
+        })
+        .catch(err => console.error(`Ошибка при загрузке оценок за месяц ${month}:`, err));
+    }))
+    .then(() => {
+      // Строим диаграммы для каждого предмета
+      renderCharts(subjects, averages);
+    })
+    .catch(err => console.error('Ошибка при загрузке данных для статистики:', err));
+  }
+
+  // Функция для отрисовки диаграмм
+  function renderCharts(subjects, averages) {
+    // Контейнер для диаграмм
+    const chartsContainer = document.getElementById('charts-container');
+    if (!chartsContainer) {
+      console.error("Не найден контейнер для диаграмм.");
+      return;
+    }
+
+    // Очищаем контейнер перед добавлением новых диаграмм
+    chartsContainer.innerHTML = '';
+
+    // Для каждого предмета создаем новый canvas и строим диаграмму
+    subjects.forEach(subject => {
+      const canvas = document.createElement('canvas');
+      chartsContainer.appendChild(canvas);
+      
+      const ctx = canvas.getContext('2d');
+      const chartData = {
+        labels: ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'],
+        datasets: [{
+          label: subject,
+          data: averages[subject],
+          borderColor: getRandomColor(),  // Генерация случайного цвета для линии
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          fill: false
+        }]
+      };
+
+      // Создаем график для этого предмета
+      new Chart(ctx, {
+        type: 'line',  // Линейный график
+        data: chartData,
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              min: 1,
+              max: 5,
+              title: {
+                display: true,
+                text: 'Оценка'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Месяцы'
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+
+  // Функция для генерации случайного цвета для линии
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  // Обработчики для вкладок
+  document.getElementById('tab1').addEventListener('click', () => {
+    showPage('page1');
+  });
+  document.getElementById('tab2').addEventListener('click', () => showPage('page2'));
+  document.getElementById('tab3').addEventListener('click', () => showPage('page3'));
+
+  // Обработчик для кнопки "Профиль"
+  document.getElementById('profile-button').addEventListener('click', () => {
+    showPage('profile');
+  });
+
+  // Обработчик для кнопки "Выйти"
+  document.getElementById('logout-button').addEventListener('click', () => {
+    window.location.href = '/login'; // Выход
+  });
+});
+

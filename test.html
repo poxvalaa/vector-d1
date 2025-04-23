@@ -1,0 +1,188 @@
+fetch('/user')
+  .then(res => {
+    if (!res.ok) {
+      window.location.href = '/login'; // Redirect to login if not authorized
+    }
+    return res.json();
+  })
+  .then(data => {
+    document.getElementById('user').textContent = data.username;
+    document.getElementById('role').textContent = data.role;
+
+    if (data.role === 'student') {
+      fetch('/api/statistics')
+        .then(res => res.json())
+        .then(subjects => {
+          fetch('/api/diagrams/' + data.username)
+            .then(res => res.json())
+            .then(gradesData => {
+              const page1 = document.getElementById('page1');
+              page1.innerHTML = ''; // Clear previous content
+
+              // Create a chart for each subject
+              subjects.forEach(subject => {
+                const subjectData = gradesData[data.username][subject];
+                const chartContainer = document.createElement('div');
+                chartContainer.classList.add('chart-container');
+                
+                const chartTitle = document.createElement('h3');
+                chartTitle.textContent = subject;
+                chartContainer.appendChild(chartTitle);
+
+                const chartCanvas = document.createElement('canvas');
+                chartContainer.appendChild(chartCanvas);
+                page1.appendChild(chartContainer);
+
+                const months = ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'];
+                const dataPoints = months.map(month => {
+                  const grades = subjectData[month];
+                  const average = subjectData[month]['undefined'] || 0; // Use the average value
+                  return average;
+                });
+
+                const chart = new Chart(chartCanvas, {
+                  type: 'line',
+                  data: {
+                    labels: months,
+                    datasets: [{
+                      label: `Средний балл по предмету ${subject}`,
+                      data: dataPoints,
+                      borderColor: '#4CAF50',
+                      fill: false
+                    }]
+                  },
+                  options: {
+                    responsive: true,
+                    scales: {
+                      y: {
+                        min: 1,
+                        max: 5,
+                        ticks: { stepSize: 1 }
+                      }
+                    }
+                  }
+                });
+              });
+            });
+        });
+    }
+
+    // Show/hide charts section for students only
+    if (data.role === 'student') {
+      document.getElementById('student-grades-section').style.display = 'block';
+    } else {
+      document.getElementById('student-grades-section').style.display = 'none';
+    }
+
+    // Show profile or other buttons based on user role
+    if (data.role === 'admin') {
+      document.getElementById('edit-class-button-container').style.display = 'block';
+    }
+    if (data.role === 'teacher') {
+      document.getElementById('my-class-button-container').style.display = 'block';
+    }
+  })
+  .catch(err => {
+    console.error('Error fetching user data:', err);
+  });
+
+// Function to handle page visibility
+function showPage(pageId) {
+  // Hide all pages
+  document.getElementById('profile').classList.remove('active');
+  document.getElementById('profile').classList.add('hidden');
+
+  const pages = document.querySelectorAll('.content-page');
+  pages.forEach(page => {
+    page.classList.remove('active');
+    page.classList.add('hidden');
+  });
+
+  // Show the selected page
+  const pageToShow = document.getElementById(pageId);
+  if (pageToShow) {
+    pageToShow.classList.remove('hidden');
+    pageToShow.classList.add('active');
+  }
+
+  // Load statistics for students on page 1
+  if (pageId === 'page1' && document.getElementById('role').textContent === 'student') {
+    loadStudentCharts(); // Load charts for student
+  }
+}
+
+// Handle tab clicks
+document.getElementById('tab1').addEventListener('click', () => {
+  showPage('page1');
+  hideStatsForTeachersAndAdmins();
+});
+document.getElementById('tab2').addEventListener('click', () => showPage('page2'));
+document.getElementById('tab3').addEventListener('click', () => showPage('page3'));
+
+// Hide stats for teachers and admins
+function hideStatsForTeachersAndAdmins() {
+  const role = document.getElementById('role').textContent;
+  if (role !== 'student') {
+    document.getElementById('page1').innerHTML = '<h2>Страница 1</h2><p>Это статистика.</p>';
+  }
+}
+
+// Function to load charts for students
+function loadStudentCharts() {
+  fetch('/api/statistics')
+    .then(res => res.json())
+    .then(subjects => {
+      const page1 = document.getElementById('page1');
+      page1.innerHTML = ''; // Clear charts container
+
+      const months = ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'];
+      subjects.forEach(subject => {
+        const chartContainer = document.createElement('div');
+        chartContainer.classList.add('chart-container');
+        
+        const chartTitle = document.createElement('h3');
+        chartTitle.textContent = subject.name;
+        chartContainer.appendChild(chartTitle);
+
+        const canvas = document.createElement('canvas');
+        chartContainer.appendChild(canvas);
+        page1.appendChild(chartContainer);
+
+        const chartData = {
+          labels: months,
+          datasets: [{
+            label: `Средний балл по предмету ${subject.name}`,
+            data: months.map(() => Math.random() * 5),  // Replace this with real data
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+          }]
+        };
+
+        new Chart(canvas, {
+          type: 'line',
+          data: chartData,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 5,
+              },
+            },
+          },
+        });
+      });
+    })
+    .catch(err => console.error('Error loading statistics:', err));
+}
+
+// Handle profile button click
+document.getElementById('profile-button').addEventListener('click', () => {
+  document.getElementById('profile').classList.remove('hidden');
+  document.getElementById('profile').classList.add('active');
+});
+
+// Logout handler
+document.getElementById('logout-button').addEventListener('click', () => {
+  window.location.href = '/login'; // Logout and redirect
+});
